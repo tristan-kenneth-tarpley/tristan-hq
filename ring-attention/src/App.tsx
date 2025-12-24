@@ -225,22 +225,50 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-gray-200 font-sans selection:bg-blue-500/30">
-      <nav className="border-b border-gray-900 bg-black/80 backdrop-blur-xl sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between gap-8">
-          <div className="flex items-center gap-3 shrink-0">
-            <div className="w-7 h-7 bg-blue-600 rounded flex items-center justify-center font-black text-white text-xs">
-              R
+    <div className="min-h-screen bg-[#050505] font-sans text-gray-200 selection:bg-blue-500/30">
+      <nav className="sticky top-0 z-50 border-b border-gray-900 bg-black/80 py-3 backdrop-blur-xl md:h-16 md:py-0">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 md:h-full md:flex-row md:gap-8">
+          {/* Logo & Mode Switcher Row (Mobile) */}
+          <div className="flex w-full items-center justify-between md:w-auto md:justify-start md:gap-3">
+            <div className="flex items-center gap-3 shrink-0">
+              <div className="flex h-7 w-7 items-center justify-center rounded bg-blue-600 text-xs font-black text-white">
+                R
+              </div>
+              <h1 className="hidden text-[10px] font-bold uppercase tracking-tighter text-white sm:block">
+                AttentionLab
+              </h1>
             </div>
-            <h1 className="font-bold text-white uppercase text-[10px] tracking-tighter hidden sm:block">
-              AttentionLab
-            </h1>
+
+            {/* Mode Switcher (Mobile Only) */}
+            <div className="flex items-center gap-1 rounded-lg border border-gray-800 bg-gray-900 p-0.5 md:hidden">
+              <button
+                onClick={() => setMode("story")}
+                className={cn(
+                  "flex items-center gap-1.5 rounded px-2.5 py-1 text-[9px] font-bold transition-all",
+                  mode === "story" ? "bg-blue-600 text-white" : "text-gray-500",
+                )}
+              >
+                <GraduationCap size={10} /> Story
+              </button>
+              <button
+                onClick={() => setMode("tech")}
+                className={cn(
+                  "flex items-center gap-1.5 rounded px-2.5 py-1 text-[9px] font-bold transition-all",
+                  mode === "tech"
+                    ? "bg-purple-600 text-white"
+                    : "text-gray-500",
+                )}
+              >
+                <Cpu size={10} /> Tech
+              </button>
+            </div>
           </div>
 
-          <div className="flex flex-1 items-center justify-center gap-8">
-            <div className="hidden md:flex flex-col gap-0.5 min-w-[140px]">
-              <div className="flex justify-between items-end">
-                <label className="text-[8px] font-black text-gray-500 uppercase tracking-widest">
+          <div className="flex flex-1 flex-wrap items-center justify-center gap-x-6 gap-y-3 md:flex-nowrap md:gap-8 lg:gap-12">
+            {/* Sequence Length Slider */}
+            <div className="flex min-w-[120px] flex-col gap-0.5 sm:min-w-[140px]">
+              <div className="flex items-end justify-between">
+                <label className="text-[8px] font-black uppercase tracking-widest text-gray-500">
                   {m.data}s
                 </label>
                 <span className="font-mono text-[10px] font-bold text-blue-400">
@@ -257,16 +285,16 @@ export default function App() {
                   setSequenceLength(parseInt(e.target.value));
                   reset();
                 }}
-                className="w-full h-1 accent-blue-500 bg-gray-800 rounded-lg appearance-none cursor-pointer"
+                className="h-1 w-full cursor-pointer appearance-none rounded-lg bg-gray-800 accent-blue-500"
               />
             </div>
 
-            {/* Ring Size Toggle (Sticky) */}
-            <div className="hidden lg:flex flex-col gap-0.5 shrink-0">
-              <label className="text-[8px] font-black text-gray-500 uppercase tracking-widest">
+            {/* Ring Size Toggle */}
+            <div className="flex flex-col gap-0.5 shrink-0">
+              <label className="text-[8px] font-black uppercase tracking-widest text-gray-500">
                 Ring Size
               </label>
-              <div className="flex bg-black/40 p-0.5 rounded-lg border border-gray-800">
+              <div className="flex rounded-lg border border-gray-800 bg-black/40 p-0.5">
                 {[2, 4, 8].map((n) => (
                   <button
                     key={n}
@@ -330,11 +358,12 @@ export default function App() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 bg-gray-900 p-0.5 rounded-lg border border-gray-800 shrink-0">
+          {/* Mode Switcher (Desktop Only) */}
+          <div className="hidden shrink-0 items-center gap-2 rounded-lg border border-gray-800 bg-gray-900 p-0.5 md:flex">
             <button
               onClick={() => setMode("story")}
               className={cn(
-                "px-3 py-1 rounded text-[10px] font-bold transition-all flex items-center gap-1.5",
+                "flex items-center gap-1.5 rounded px-3 py-1 text-[10px] font-bold transition-all",
                 mode === "story" ? "bg-blue-600 text-white" : "text-gray-500",
               )}
             >
@@ -344,7 +373,7 @@ export default function App() {
             <button
               onClick={() => setMode("tech")}
               className={cn(
-                "px-3 py-1 rounded text-[10px] font-bold transition-all flex items-center gap-1.5",
+                "flex items-center gap-1.5 rounded px-3 py-1 text-[10px] font-bold transition-all",
                 mode === "tech" ? "bg-purple-600 text-white" : "text-gray-500",
               )}
             >
@@ -546,7 +575,8 @@ export default function App() {
                         <Popover.Portal>
                           <Popover.Content
                             sideOffset={5}
-                            className="z-50 w-72 bg-gray-900 border border-gray-800 p-4 rounded-xl shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in duration-200"
+                            collisionPadding={10}
+                            className="z-50 w-[calc(100vw-40px)] max-w-72 bg-gray-900 border border-gray-800 p-4 rounded-xl shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in duration-200"
                           >
                             <div className="space-y-2">
                               <div className="text-[10px] font-black uppercase text-blue-400 tracking-widest">
@@ -568,7 +598,7 @@ export default function App() {
                             </div>
                             <Popover.Arrow className="fill-gray-800" />
                           </Popover.Content>
-                        </Popover.Portal>
+                        </Popover.Portal>{" "}
                       </Popover.Root>
                     ))}
                   </div>
@@ -585,7 +615,10 @@ export default function App() {
               <div className="w-full xl:w-64 flex flex-col p-4 bg-purple-600/5 rounded-2xl border border-purple-500/10 space-y-4 items-center justify-center shrink-0">
                 <div className="text-center w-full mb-auto">
                   <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4">
-                    2. Incoming Context
+                    2. Context{" "}
+                    {step === 0
+                      ? "(Local)"
+                      : `(Passed from Node ${((selectedNode - 1 + numDevices) % numDevices) + 1})`}
                   </h4>
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -684,9 +717,10 @@ export default function App() {
                             </Popover.Trigger>
                             <Popover.Portal>
                               <Popover.Content
-                                side="left"
+                                side="top"
                                 sideOffset={10}
-                                className="z-50 w-64 bg-white border-2 border-gray-200 p-4 rounded-xl shadow-xl animate-in fade-in slide-in-from-right-2 duration-200"
+                                collisionPadding={10}
+                                className="z-50 w-[calc(100vw-40px)] max-w-64 bg-white border-2 border-gray-200 p-4 rounded-xl shadow-xl animate-in fade-in slide-in-from-right-2 duration-200"
                               >
                                 <div className="space-y-2 text-left text-gray-900">
                                   <div className="flex justify-between items-center">
