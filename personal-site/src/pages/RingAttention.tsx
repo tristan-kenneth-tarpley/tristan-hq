@@ -4,7 +4,6 @@ import {
   GraduationCap,
   Cpu,
   Flashlight,
-  Calculator,
   Notebook,
   BookMarked,
   Search,
@@ -16,13 +15,7 @@ import { Navbar } from "../components/Navbar";
 import { Scorecard } from "../components/Scorecard";
 import { ScenarioCard } from "../components/ScenarioCard";
 import { cn } from "../components/ui-elements";
-import {
-  STORY_DATA,
-  TECH_DATA,
-  METAPHORS,
-  DEFINITIONS,
-  type Mode,
-} from "../constants";
+import { STORY_DATA, TECH_DATA, METAPHORS, type Mode } from "../constants";
 
 export default function RingAttention() {
   const [mode, setMode] = useState<Mode>("story");
@@ -35,7 +28,7 @@ export default function RingAttention() {
   // --- Latency & Overlap State ---
   const [isOverlapped, setIsOverlapped] = useState(true);
   const [networkLatency, setNetworkLatency] = useState(30); // 0-100
-  const [isComputing, setIsComputing] = useState(true);
+  const [, setIsComputing] = useState(true);
   const [isTransferring, setIsTransferring] = useState(false);
 
   const m = METAPHORS[mode];

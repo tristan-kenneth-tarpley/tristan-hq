@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import * as Popover from "@radix-ui/react-popover";
 import { Calculator } from "lucide-react";
 import { cn } from "./ui-elements";
