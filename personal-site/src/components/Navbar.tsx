@@ -5,6 +5,7 @@ import {
   Pause,
   Play,
   ChevronRight,
+  Radio,
 } from "lucide-react";
 import { METAPHORS, type Mode } from "../constants";
 import { cn } from "./ui-elements";
@@ -43,27 +44,30 @@ export const Navbar = ({
   const location = useLocation();
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-gray-900 bg-black/80 py-3 backdrop-blur-xl md:h-16 md:py-0">
+    <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0a0a2e]/80 py-3 backdrop-blur-xl md:h-16 md:py-0">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 md:h-full md:flex-row md:gap-8">
+        {/* Logo & Mode Switcher Row (Mobile) */}
         <div className="flex w-full items-center justify-between md:w-auto md:justify-start md:gap-3">
           <div className="flex items-center gap-3 shrink-0">
-            <Link to="/" className="flex items-center gap-3 shrink-0">
-              <div className="flex h-7 w-7 items-center justify-center rounded bg-blue-600 text-xs font-black text-white">
-                TKT
+            <Link to="/" className="group flex items-center gap-3">
+              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-[#00f2ff] to-[#ff00e5] p-[1px] shadow-[0_0_15px_rgba(0,242,255,0.3)]">
+                <div className="flex h-full w-full items-center justify-center rounded-full bg-[#0a0a2e] text-[10px] font-black text-white">
+                  T
+                </div>
               </div>
-              <h1 className="hidden text-[10px] font-bold uppercase tracking-tighter text-white sm:block">
-                Tristan Tarpley
+              <h1 className="hidden text-[10px] font-black uppercase tracking-tighter text-white sm:block italic">
+                Tinkerings
               </h1>
             </Link>
 
-            <div className="flex items-center gap-1 border-l border-gray-800 pl-3 ml-1">
+            <div className="flex items-center gap-1 border-l border-white/10 pl-3 ml-1">
               <Link
                 to="/self-attention"
                 className={cn(
-                  "px-2 py-1 rounded text-[10px] font-bold transition-all",
+                  "px-2 py-1 rounded text-[10px] font-black uppercase tracking-widest transition-all italic",
                   location.pathname === "/self-attention"
-                    ? "bg-white/10 text-white"
-                    : "text-gray-500 hover:text-gray-300",
+                    ? "text-[#00f2ff] shadow-[0_0_10px_rgba(0,242,255,0.2)]"
+                    : "text-blue-300/40 hover:text-blue-100",
                 )}
               >
                 Standard
@@ -71,10 +75,10 @@ export const Navbar = ({
               <Link
                 to="/ring-attention"
                 className={cn(
-                  "px-2 py-1 rounded text-[10px] font-bold transition-all",
+                  "px-2 py-1 rounded text-[10px] font-black uppercase tracking-widest transition-all italic",
                   location.pathname === "/ring-attention"
-                    ? "bg-white/10 text-white"
-                    : "text-gray-500 hover:text-gray-300",
+                    ? "text-[#ff00e5] shadow-[0_0_10px_rgba(255,0,229,0.2)]"
+                    : "text-blue-300/40 hover:text-blue-100",
                 )}
               >
                 Ring
@@ -83,24 +87,28 @@ export const Navbar = ({
           </div>
 
           {/* Mode Switcher (Mobile Only) */}
-          <div className="flex items-center gap-1 rounded-lg border border-gray-800 bg-gray-900 p-0.5 md:hidden">
+          <div className="flex items-center gap-1 rounded-full border border-white/10 bg-white/5 p-0.5 md:hidden">
             <button
               onClick={() => setMode("story")}
               className={cn(
-                "flex items-center gap-1.5 rounded px-2.5 py-1 text-[9px] font-bold transition-all",
-                mode === "story" ? "bg-blue-600 text-white" : "text-gray-500",
+                "flex items-center gap-1.5 rounded-full px-3 py-1 text-[9px] font-black uppercase transition-all italic",
+                mode === "story"
+                  ? "bg-[#00f2ff] text-[#0a0a2e]"
+                  : "text-blue-300/60",
               )}
             >
-              <GraduationCap size={10} /> Story
+              Story
             </button>
             <button
               onClick={() => setMode("tech")}
               className={cn(
-                "flex items-center gap-1.5 rounded px-2.5 py-1 text-[9px] font-bold transition-all",
-                mode === "tech" ? "bg-purple-600 text-white" : "text-gray-500",
+                "flex items-center gap-1.5 rounded-full px-3 py-1 text-[9px] font-black uppercase transition-all italic",
+                mode === "tech"
+                  ? "bg-[#ff00e5] text-white"
+                  : "text-blue-300/60",
               )}
             >
-              <Cpu size={10} /> Tech
+              Tech
             </button>
           </div>
         </div>
@@ -108,11 +116,11 @@ export const Navbar = ({
         <div className="flex flex-1 flex-wrap items-center justify-center gap-x-6 gap-y-3 md:flex-nowrap md:gap-8 lg:gap-12">
           {/* Sequence Length Slider */}
           <div className="flex min-w-[120px] flex-col gap-0.5 sm:min-w-[140px]">
-            <div className="flex items-end justify-between">
-              <label className="text-[8px] font-black uppercase tracking-widest text-gray-500">
+            <div className="flex items-end justify-between px-1">
+              <label className="text-[8px] font-black uppercase tracking-[0.2em] text-blue-300/40">
                 {m.data}s
               </label>
-              <span className="font-mono text-[10px] font-bold text-blue-400">
+              <span className="font-mono text-[10px] font-black text-[#00f2ff]">
                 {sequenceLength.toLocaleString()}
               </span>
             </div>
@@ -126,17 +134,17 @@ export const Navbar = ({
                 setSequenceLength(parseInt(e.target.value));
                 reset();
               }}
-              className="h-1 w-full cursor-pointer appearance-none rounded-lg bg-gray-800 accent-blue-500"
+              className="h-1 w-full cursor-pointer appearance-none rounded-full bg-white/10 accent-[#00f2ff]"
             />
           </div>
 
-          {/* Ring Size Toggle (only if applicable) */}
+          {/* Ring Size Toggle */}
           {numDevices !== undefined && setNumDevices && (
             <div className="flex flex-col gap-0.5 shrink-0">
-              <label className="text-[8px] font-black uppercase tracking-widest text-gray-500">
-                Ring Size
+              <label className="text-[8px] font-black uppercase tracking-[0.2em] text-blue-300/40 text-center">
+                Nodes
               </label>
-              <div className="flex rounded-lg border border-gray-800 bg-black/40 p-0.5">
+              <div className="flex rounded-full border border-white/10 bg-white/5 p-0.5">
                 {[2, 4, 8].map((n) => (
                   <button
                     key={n}
@@ -145,10 +153,10 @@ export const Navbar = ({
                       reset();
                     }}
                     className={cn(
-                      "px-2.5 py-0.5 rounded text-[9px] font-bold transition-all",
+                      "px-2.5 py-0.5 rounded-full text-[9px] font-black transition-all italic",
                       numDevices === n
-                        ? "bg-blue-600 text-white shadow-lg"
-                        : "text-gray-500 hover:text-gray-300",
+                        ? "bg-white/20 text-[#00f2ff]"
+                        : "text-blue-300/40 hover:text-blue-100",
                     )}
                   >
                     {n}
@@ -160,20 +168,20 @@ export const Navbar = ({
 
           {/* Playback Controls & Phase */}
           <div className="flex items-center gap-4 shrink-0">
-            <div className="flex rounded-lg border border-gray-800 bg-black/40 p-0.5">
+            <div className="flex rounded-full border border-white/10 bg-white/5 p-0.5">
               <button
                 onClick={reset}
-                className="rounded p-1.5 text-gray-500 transition-colors hover:bg-gray-800"
+                className="rounded-full p-1.5 text-blue-300/40 transition-colors hover:bg-white/10 hover:text-white"
               >
                 <RotateCcw size={14} />
               </button>
               <button
                 onClick={() => setIsPlaying(!isPlaying)}
                 className={cn(
-                  "mx-0.5 flex h-7 w-8 items-center justify-center rounded font-bold shadow-lg transition-all active:scale-95",
+                  "mx-0.5 flex h-7 w-8 items-center justify-center rounded-full font-black shadow-lg transition-all active:scale-95",
                   isPlaying
-                    ? "bg-red-500/10 text-red-400"
-                    : "bg-white text-black hover:bg-gray-100",
+                    ? "bg-[#ff00e5]/20 text-[#ff00e5]"
+                    : "bg-[#00f2ff] text-[#0a0a2e]",
                 )}
               >
                 {isPlaying ? (
@@ -184,45 +192,51 @@ export const Navbar = ({
               </button>
               <button
                 onClick={() => setStep((s) => (s + 1) % maxSteps)}
-                className="rounded p-1.5 text-gray-500 transition-colors hover:bg-gray-800"
+                className="rounded-full p-1.5 text-blue-300/40 transition-colors hover:bg-white/10 hover:text-white"
               >
                 <ChevronRight size={14} />
               </button>
             </div>
 
-            <div className="flex items-baseline gap-1.5">
-              <div className="text-[8px] font-black uppercase tracking-widest text-gray-500">
-                Phase
-              </div>
-              <div className="font-mono text-lg font-black leading-none tracking-tighter text-white">
-                {step + 1}
-                <span className="text-xs text-gray-500">/</span>
-                {maxSteps}
+            <div className="flex items-center gap-2">
+              <Radio size={10} className="text-[#ff00e5] animate-pulse" />
+              <div className="flex items-baseline gap-1">
+                <div className="text-[8px] font-black uppercase tracking-widest text-blue-300/40">
+                  Step
+                </div>
+                <div className="font-mono text-lg font-black leading-none tracking-tighter text-white italic">
+                  {step + 1}
+                  <span className="text-blue-300/40">/</span>
+                  {maxSteps}
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Mode Switcher (Desktop Only) */}
-        <div className="hidden shrink-0 items-center gap-2 rounded-lg border border-gray-800 bg-gray-900 p-0.5 md:flex">
+        <div className="hidden shrink-0 items-center gap-1 rounded-full border border-white/10 bg-white/5 p-0.5 md:flex">
           <button
             onClick={() => setMode("story")}
             className={cn(
-              "flex items-center gap-1.5 rounded px-3 py-1 text-[10px] font-bold transition-all",
-              mode === "story" ? "bg-blue-600 text-white" : "text-gray-500",
+              "flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-black uppercase transition-all italic",
+              mode === "story"
+                ? "bg-[#00f2ff] text-[#0a0a2e]"
+                : "text-blue-300/60",
             )}
           >
-            <GraduationCap size={12} />{" "}
-            <span className="hidden xl:inline">Story</span>
+            Story
           </button>
           <button
             onClick={() => setMode("tech")}
             className={cn(
-              "flex items-center gap-1.5 rounded px-3 py-1 text-[10px] font-bold transition-all",
-              mode === "tech" ? "bg-purple-600 text-white" : "text-gray-500",
+              "flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-black uppercase transition-all italic",
+              mode === "tech"
+                ? "bg-[#ff00e5] text-white shadow-[0_0_10px_rgba(255,0,229,0.3)]"
+                : "text-blue-300/60",
             )}
           >
-            <Cpu size={12} /> <span className="hidden xl:inline">Tech</span>
+            Tech
           </button>
         </div>
       </div>
