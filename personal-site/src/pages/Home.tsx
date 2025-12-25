@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Rocket, Radio, User } from "lucide-react";
+import { ArrowRight, Sparkles, Rocket, Radio, Linkedin } from "lucide-react";
 
 const getYear = () => {
   const date = new Date();
@@ -9,20 +9,44 @@ const getYear = () => {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#0a0a2e] text-[#f0f9ff] selection:bg-[#00f2ff]/30 overflow-hidden font-sans relative">
+    <div className="min-h-screen bg-[#0a0a2e] text-[#f0f9ff] selection:bg-[#00f2ff]/30 font-sans relative">
       {/* Space Age Background Elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         {/* Glowing Planetary Rings */}
-        <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] border-[40px] border-[#00f2ff]/5 rounded-full rotate-[30deg]" />
-        <div className="absolute bottom-[-5%] left-[-5%] w-[400px] h-[400px] border-[20px] border-[#ff00e5]/5 rounded-full rotate-[-15deg]" />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, rotate: 0 }}
+          animate={{ opacity: 1, scale: 1, rotate: 30 }}
+          transition={{ duration: 2.5, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] border-[40px] border-[#00f2ff]/5 rounded-full"
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, rotate: 0 }}
+          animate={{ opacity: 1, scale: 1, rotate: -15 }}
+          transition={{ duration: 2.5, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+          className="absolute bottom-[-5%] left-[-5%] w-[400px] h-[400px] border-[20px] border-[#ff00e5]/5 rounded-full"
+        />
 
         {/* Starbursts */}
-        <div className="absolute top-[20%] left-[10%] opacity-20 animate-pulse text-[#00f2ff]">
-          <Sparkles size={40} />
-        </div>
-        <div className="absolute bottom-[30%] right-[15%] opacity-20 animate-pulse delay-700 text-[#ff00e5]">
-          <Sparkles size={32} />
-        </div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0, rotate: -180 }}
+          animate={{ opacity: 0.2, scale: 1, rotate: 0 }}
+          transition={{ duration: 1.5, ease: "backOut", delay: 0.8 }}
+          className="absolute top-[20%] left-[10%] text-[#00f2ff]"
+        >
+          <div className="animate-pulse">
+            <Sparkles size={40} />
+          </div>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0, rotate: 180 }}
+          animate={{ opacity: 0.2, scale: 1, rotate: 0 }}
+          transition={{ duration: 1.5, ease: "backOut", delay: 1 }}
+          className="absolute bottom-[30%] right-[15%] text-[#ff00e5]"
+        >
+          <div className="animate-pulse delay-700">
+            <Sparkles size={32} />
+          </div>
+        </motion.div>
       </div>
 
       <main className="max-w-5xl mx-auto px-6 py-24 flex flex-col items-center justify-center min-h-screen relative z-10">
@@ -52,16 +76,16 @@ export default function Home() {
               <div className="inline-flex items-center gap-2 mb-6 px-4 py-1 bg-[#00f2ff]/10 border border-[#00f2ff]/30 rounded-full">
                 <Radio size={12} className="text-[#00f2ff] animate-pulse" />
                 <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#00f2ff]">
-                  Orbiting Space City (Houston)
+                  Houston, Texas
                 </span>
               </div>
 
               <h1 className="text-7xl font-black tracking-tighter text-white mb-6 bg-gradient-to-b from-white to-[#00f2ff] bg-clip-text text-transparent italic">
-                Tristan Tarpley
+                Welcome to Tristan HQ
               </h1>
 
               <p className="text-xl text-blue-100/70 leading-relaxed max-w-lg mx-auto font-medium italic">
-                temp bio
+                Home of tinkerings, musings, and happenings
               </p>
             </motion.div>
 
@@ -75,7 +99,7 @@ export default function Home() {
             <div className="flex items-center justify-center gap-4">
               <div className="w-2 h-2 bg-[#ff00e5] rounded-full shadow-[0_0_10px_#ff00e5]" />
               <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-[#ff00e5] italic">
-                Personnel Profile
+                Profile
               </h2>
               <div className="w-2 h-2 bg-[#ff00e5] rounded-full shadow-[0_0_10px_#ff00e5]" />
             </div>
@@ -96,23 +120,36 @@ export default function Home() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                {/* Overlay scanline for image */}
-                <div className="absolute inset-0 z-20 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%)] bg-[length:100%_4px]" />
               </div>
 
               <div className="text-left flex-1 relative z-10">
                 <h3 className="text-lg font-black text-white italic mb-2 tracking-tight uppercase">
-                  Staff Engineer
+                  Tristan Tarpley
                 </h3>
                 <p className="text-sm text-blue-100/70 leading-relaxed font-medium italic">
                   I'm a Staff Engineer at{" "}
-                  <span className="text-white font-black underline decoration-[#00f2ff] decoration-2 underline-offset-4">
+                  <a
+                    href="https://www.webflow.com/"
+                    target="_blank"
+                    rel="noopener"
+                    className="text-white font-black underline decoration-[#00f2ff] decoration-2 underline-offset-4"
+                  >
                     Webflow
-                  </span>{" "}
-                  based in Houston. I spend my time building complex systems,
-                  obsessing over architecture, and occasionally trying to
-                  explain how LLMs work using space-age metaphors.
+                  </a>{" "}
+                  focused on generative design features. I live in Houston,
+                  Texas, with my wife, Andréa, and daughter, Amélie.
                 </p>
+                <div className="mt-4 flex items-center gap-4">
+                  <a
+                    href="https://www.linkedin.com/in/tristantarpley/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#00f2ff] hover:text-[#ff00e5] transition-colors group/link"
+                  >
+                    <Linkedin size={14} />
+                    <span>LinkedIn</span>
+                  </a>
+                </div>
               </div>
             </motion.div>
           </section>
@@ -166,6 +203,16 @@ export default function Home() {
           <span>Stardate {getYear()}</span>
           <div className="w-1 h-1 bg-white/20 rounded-full" />
           <span>Sector: Houston</span>
+          <div className="w-1 h-1 bg-white/20 rounded-full" />
+          <a
+            href="https://www.linkedin.com/in/tristantarpley/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#00f2ff] transition-colors flex items-center gap-1.5"
+          >
+            <Linkedin size={10} />
+            <span>LinkedIn</span>
+          </a>
         </div>
       </main>
     </div>

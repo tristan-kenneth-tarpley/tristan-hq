@@ -1,6 +1,4 @@
 import {
-  GraduationCap,
-  Cpu,
   RotateCcw,
   Pause,
   Play,
@@ -52,7 +50,7 @@ export const Navbar = ({
             <Link to="/" className="group flex items-center gap-3">
               <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-[#00f2ff] to-[#ff00e5] p-[1px] shadow-[0_0_15px_rgba(0,242,255,0.3)]">
                 <div className="flex h-full w-full items-center justify-center rounded-full bg-[#0a0a2e] text-[10px] font-black text-white">
-                  T
+                  TT
                 </div>
               </div>
               <h1 className="hidden text-[10px] font-black uppercase tracking-tighter text-white sm:block italic">

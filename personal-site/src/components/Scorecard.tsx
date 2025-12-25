@@ -2,7 +2,6 @@ import * as Popover from "@radix-ui/react-popover";
 import { Calculator, Radio } from "lucide-react";
 import { cn } from "./ui-elements";
 import { DEFINITIONS, type Mode } from "../constants";
-import { motion } from "framer-motion";
 
 interface ScorecardProps {
   currentScore: number;

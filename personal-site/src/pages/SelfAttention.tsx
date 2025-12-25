@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   GraduationCap,
   Cpu,
@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 import * as Popover from "@radix-ui/react-popover";
 import { Navbar } from "../components/Navbar";
-import { Scorecard } from "../components/Scorecard";
 import { ScenarioCard } from "../components/ScenarioCard";
 import { MemoryMeter, cn } from "../components/ui-elements";
 import { STORY_DATA, TECH_DATA, METAPHORS, type Mode } from "../constants";
@@ -45,7 +44,7 @@ export default function SelfAttention() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a2e] text-white font-sans selection:bg-[#00f2ff]/30 overflow-x-hidden">
+    <div className="min-h-screen bg-[#0a0a2e] text-white font-sans selection:bg-[#00f2ff]/30">
       {/* Space Age Glows */}
       <div className="fixed inset-0 pointer-events-none -z-10">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#00f2ff]/5 blur-[120px] rounded-full" />
@@ -73,11 +72,13 @@ export default function SelfAttention() {
               animate={{ x: 0, opacity: 1 }}
             >
               <h2 className="text-5xl font-black italic tracking-tighter text-white mb-2 leading-tight">
-                {mode === "story" ? "The Lone Explorer" : "Standard Attention"}
+                {mode === "story"
+                  ? "The Single Processor"
+                  : "Standard Attention"}
               </h2>
               <p className="text-blue-100/60 text-lg max-w-2xl leading-relaxed font-medium italic">
                 {mode === "story"
-                  ? "A single entity attempting to navigate an exponential sea of information."
+                  ? "A single entity attempting to manage a rapidly expanding set of information."
                   : "Traditional attention mechanism processing global context on a single localized unit."}
               </p>
             </motion.div>
@@ -109,10 +110,10 @@ export default function SelfAttention() {
                     className="mx-auto mb-4 animate-bounce text-[#ff00e5]"
                   />
                   <h3 className="text-2xl font-black italic tracking-tighter text-white uppercase">
-                    Critical Overflow
+                    Memory Overflow
                   </h3>
                   <p className="mt-2 text-[10px] font-bold uppercase tracking-widest text-[#ff00e5]/60">
-                    Memory Wall Breached
+                    VRAM Capacity Exceeded
                   </p>
                 </motion.div>
               ) : (
@@ -134,12 +135,12 @@ export default function SelfAttention() {
                   </motion.div>
                   <div className="w-full px-8 text-center">
                     <span className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-300/40 italic">
-                      Unit Status
+                      Hardware Status
                     </span>
                     <div className="mt-4">
                       <MemoryMeter
                         percentage={standardMemory}
-                        label="Storage Load"
+                        label="Memory Load"
                       />
                     </div>
                   </div>
@@ -157,7 +158,7 @@ export default function SelfAttention() {
                 <div className="flex items-center gap-3">
                   <LayoutGrid size={24} className="text-[#00f2ff]" />
                   <h3 className="text-2xl font-black italic tracking-tight text-white uppercase">
-                    The N² Grid
+                    Quadratic Matrix
                   </h3>
                 </div>
                 <div className="font-mono text-[10px] font-black tracking-widest text-blue-300/40">
@@ -217,7 +218,7 @@ export default function SelfAttention() {
                                   <span>
                                     {mode === "tech"
                                       ? "Query (Q)"
-                                      : "The Search"}
+                                      : "The Inquiry"}
                                   </span>
                                   <span className="opacity-50">Row {row}</span>
                                 </div>
@@ -238,7 +239,7 @@ export default function SelfAttention() {
                                   <span className="opacity-50">Col {col}</span>
                                 </div>
                                 <div className="rounded-xl bg-purple-50 p-2 font-mono text-[9px] font-bold text-purple-900">
-                                  REF_TAG_{col}_HEX
+                                  KEY_BLOCK_{col}
                                 </div>
                               </div>
                             </div>
@@ -271,11 +272,11 @@ export default function SelfAttention() {
                 className="mb-6 text-[#ff00e5] opacity-30 animate-pulse"
               />
               <h3 className="text-3xl font-black italic tracking-tighter text-white uppercase">
-                Matrix Void
+                Hardware Fault
               </h3>
               <p className="mt-2 text-sm font-medium italic text-blue-100/40 tracking-tight leading-relaxed">
                 The grid has expanded beyond physical hardware constraints.
-                Classical memory has failed.
+                Available memory has been exhausted.
               </p>
             </div>
           )}
@@ -293,7 +294,7 @@ export default function SelfAttention() {
                 </div>
                 <div>
                   <h3 className="text-2xl font-black italic tracking-tight text-white uppercase">
-                    The "Super {m.unit}"
+                    Centralized {m.unit}
                   </h3>
                   <div className="mt-1 flex items-center gap-2">
                     <div className="h-1.5 w-1.5 rounded-full bg-[#ff00e5] animate-pulse" />
@@ -313,8 +314,7 @@ export default function SelfAttention() {
                   <div className="flex items-center gap-3">
                     <Search size={18} className="text-[#00f2ff]" />
                     <h4 className="text-[11px] font-black uppercase tracking-[0.4em] text-blue-300/60 italic">
-                      1.{" "}
-                      {mode === "tech" ? "Global Query (Q)" : "Global Intent"}
+                      1. {mode === "tech" ? "Global Query (Q)" : "Core Inquiry"}
                     </h4>
                   </div>
                   <div className="rounded-2xl border-2 border-white/5 bg-white/5 p-4">
@@ -390,7 +390,7 @@ export default function SelfAttention() {
                                 >
                                   {isLearned && blockWeight > 0.4 && (
                                     <span className="text-[8px] font-black italic tracking-widest text-[#0a0a2e]/40">
-                                      CORE_MEM_{i + 1}
+                                      MEM_BLOCK_{i + 1}
                                     </span>
                                   )}
                                 </motion.button>
@@ -405,7 +405,7 @@ export default function SelfAttention() {
                                   <div className="space-y-3 text-left">
                                     <div className="flex items-center justify-between border-b border-gray-100 pb-2">
                                       <span className="text-[10px] font-black uppercase tracking-widest text-[#ff00e5] italic">
-                                        Archive {i + 1}
+                                        Data Entry {i + 1}
                                       </span>
                                       <span className="font-mono text-[10px] font-black text-gray-400">
                                         RANK_{(blockWeight * 100).toFixed(0)}
@@ -443,7 +443,7 @@ export default function SelfAttention() {
                     {!isOOM && (
                       <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-3">
                         <span className="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 italic">
-                          Synthesis Pass
+                          Weighted Sum
                         </span>
                         <span className="text-[10px] font-black italic text-[#ff00e5]">
                           {Math.round(

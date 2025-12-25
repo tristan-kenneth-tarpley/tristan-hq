@@ -4,7 +4,6 @@ import {
   GraduationCap,
   Cpu,
   Flashlight,
-  Calculator,
   Notebook,
   BookMarked,
   Search,
@@ -47,25 +46,25 @@ export default function RingAttention() {
   const currentBlockData = dataSet[currentBlockId % dataSet.length];
   const currentScore = currentBlockData.score;
 
-  const [mathState, setMathState] = useState({ max: 0, sum: 0 });
+  const mathState = useMemo(() => {
+    // Re-calculate the cumulative max/sum up to the current step
+    let max = currentScores[selectedNode % currentScores.length];
+    let sum = currentScores[selectedNode % currentScores.length];
 
-  useEffect(() => {
-    if (step === 0) {
-      setMathState({
-        max: currentScores[selectedNode % currentScores.length],
-        sum: currentScores[selectedNode % currentScores.length],
-      });
-    } else {
-      setMathState((prev) => {
-        const newMax = Math.max(prev.max, currentScore);
-        const newSum =
-          newMax > prev.max
-            ? prev.sum * Math.exp(prev.max - newMax) + currentScore
-            : prev.sum + currentScore;
-        return { max: newMax, sum: newSum };
-      });
+    // If step > 0, we need to iterate from step 1 to the current step
+    // Note: The original logic seemed to accumulate based on the sequence of blocks
+    // as they arrive. We mimic that accumulation here.
+    for (let s = 1; s <= step; s++) {
+      const bid = (selectedNode - s + numDevices) % numDevices;
+      const score = dataSet[bid % dataSet.length].score;
+
+      const newMax = Math.max(max, score);
+      sum = newMax > max ? sum * Math.exp(max - newMax) + score : sum + score;
+      max = newMax;
     }
-  }, [step, selectedNode, currentScores, currentScore]);
+
+    return { max, sum };
+  }, [step, selectedNode, currentScores, numDevices, dataSet]);
 
   useEffect(() => {
     let interval: number;
@@ -99,11 +98,10 @@ export default function RingAttention() {
   const reset = () => {
     setStep(0);
     setIsPlaying(false);
-    setMathState({ max: 0, sum: 0 });
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a2e] text-white font-sans selection:bg-[#00f2ff]/30 overflow-x-hidden">
+    <div className="min-h-screen bg-[#0a0a2e] text-white font-sans selection:bg-[#00f2ff]/30">
       {/* Space Age Glows */}
       <div className="fixed inset-0 pointer-events-none -z-10">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#00f2ff]/5 blur-[120px] rounded-full" />
@@ -135,7 +133,7 @@ export default function RingAttention() {
                   <Radio size={16} className="animate-pulse" />
                 </div>
                 <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-white italic">
-                  Network Sync
+                  Network Configuration
                 </h3>
               </div>
               <button
@@ -152,15 +150,15 @@ export default function RingAttention() {
             </div>
             <p className="text-[11px] font-medium leading-relaxed text-blue-100/50 italic">
               {isOverlapped
-                ? "Quantum Pipelining: Nodes receive new context while processing current data."
-                : "Standard Link: Hardware waits for total data synchronization before computation."}
+                ? "Pipelined Execution: Nodes receive next data blocks while processing current ones."
+                : "Standard Link: Hardware waits for full data synchronization before starting computation."}
             </p>
           </div>
 
           <div className="space-y-4">
             <div className="flex items-baseline justify-between px-1">
               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-blue-300/40">
-                Transmission Delay
+                Network Latency
               </label>
               <span
                 className={cn(
@@ -181,8 +179,8 @@ export default function RingAttention() {
               className="h-1 w-full cursor-pointer appearance-none rounded-full bg-white/10 accent-[#00f2ff]"
             />
             <div className="flex justify-between text-[8px] font-black uppercase tracking-[0.2em] text-blue-300/20">
-              <span>Hyperlink</span>
-              <span>Long-Range</span>
+              <span>Low Latency</span>
+              <span>High Latency</span>
             </div>
           </div>
         </div>
@@ -194,12 +192,14 @@ export default function RingAttention() {
               animate={{ x: 0, opacity: 1 }}
             >
               <h2 className="text-5xl font-black italic tracking-tighter text-white mb-4">
-                {mode === "story" ? "The Study Circle" : "Ring Attention"}
+                {mode === "story"
+                  ? "The Collaborative Circle"
+                  : "Ring Attention"}
               </h2>
               <p className="text-blue-100/60 text-lg max-w-2xl leading-relaxed font-medium italic">
                 {mode === "story"
-                  ? "A sophisticated network of students sharing original notes without any loss of detail."
-                  : "A linear complexity attention mechanism distributed across an orbital cluster."}
+                  ? "A distributed system where students share notes efficiently without losing any context."
+                  : "A linear complexity attention mechanism distributed across a compute cluster."}
               </p>
             </motion.div>
 
@@ -269,13 +269,8 @@ export default function RingAttention() {
                 );
               })}
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <div className="text-[10px] font-black text-blue-300/40 uppercase tracking-[0.4em] italic mb-1">
-                  {isPlaying && isTransferring && !isOverlapped
-                    ? "Syncing"
-                    : "Uplink"}
-                </div>
                 <div className="font-mono text-xs font-black text-white italic tracking-widest">
-                  STATION_{selectedNode + 1}
+                  Student {selectedNode + 1}
                 </div>
               </div>
             </div>
@@ -302,7 +297,7 @@ export default function RingAttention() {
                 </div>
                 <div>
                   <h3 className="text-2xl font-black text-white italic tracking-tight">
-                    {m.unit} {selectedNode + 1} Command Deck
+                    {m.unit} {selectedNode + 1} Status
                   </h3>
                   <div className="flex items-center gap-3 mt-1">
                     <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-white/5 border border-white/10">
@@ -321,8 +316,8 @@ export default function RingAttention() {
                         )}
                       >
                         {isTransferring && !isOverlapped
-                          ? "Network Blocked"
-                          : "Active Processing"}
+                          ? "I/O Wait"
+                          : "Processing"}
                       </span>
                     )}
                   </div>
@@ -330,7 +325,7 @@ export default function RingAttention() {
               </div>
               <div className="px-4 py-2 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-md">
                 <div className="text-[9px] font-black text-blue-300/40 uppercase tracking-[0.3em] mb-1">
-                  Math Core
+                  Computation
                 </div>
                 <div className="text-sm font-black text-white italic tracking-tight">
                   {m.mathTerm}: <span className="text-[#00f2ff]">OPTIMAL</span>
@@ -338,13 +333,13 @@ export default function RingAttention() {
               </div>
             </div>
 
-            <div className="relative flex flex-col xl:flex-row gap-8 xl:gap-12 min-h-[350px] items-stretch">
+            <div className="relative flex flex-col md:flex-row gap-4 sm:gap-6 min-h-[350px] items-stretch">
               {/* 1. THE SEARCH (Local State) */}
               <div className="flex-1 flex flex-col p-6 bg-white/5 rounded-[2.5rem] border border-white/5 space-y-6">
                 <div className="flex items-center gap-3 mb-1">
                   <Search size={18} className="text-[#00f2ff]" />
                   <h4 className="text-[11px] font-black uppercase tracking-[0.4em] text-blue-300/60 italic">
-                    1. {mode === "tech" ? "Query (Q)" : "The Question"}
+                    1. {mode === "tech" ? "Query (Q)" : "The Inquiry"}
                   </h4>
                 </div>
 
@@ -393,15 +388,15 @@ export default function RingAttention() {
               <div className="flex items-center justify-center opacity-10">
                 <ChevronRight
                   size={48}
-                  className="rotate-90 text-[#00f2ff] xl:rotate-0 animate-pulse"
+                  className="rotate-90 text-[#00f2ff] md:rotate-0 animate-pulse"
                 />
               </div>
 
               {/* 2. THE CACHE (Incoming Context) */}
-              <div className="flex w-full flex-col items-center justify-center shrink-0 space-y-6 rounded-[2.5rem] border border-white/5 bg-white/5 p-6 xl:w-72">
+              <div className="flex w-full flex-col items-center justify-center shrink-0 space-y-6 rounded-[2.5rem] border border-white/5 bg-white/5 p-6 md:w-64">
                 <div className="mb-auto w-full text-center">
                   <h4 className="mb-6 text-[11px] font-black uppercase tracking-[0.4em] text-blue-300/60 italic">
-                    2. {mode === "tech" ? "KV Cache" : "The Notes"}
+                    2. {mode === "tech" ? "KV Cache" : "The Data"}
                   </h4>
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -474,7 +469,7 @@ export default function RingAttention() {
               <div className="flex items-center justify-center opacity-10">
                 <ChevronRight
                   size={48}
-                  className="rotate-90 text-[#00f2ff] xl:rotate-0 animate-pulse"
+                  className="rotate-90 text-[#00f2ff] md:rotate-0 animate-pulse"
                 />
               </div>
 
@@ -526,7 +521,7 @@ export default function RingAttention() {
                             </Popover.Trigger>
                             <Popover.Portal>
                               <Popover.Content
-                                side="left"
+                                side="top"
                                 sideOffset={15}
                                 collisionPadding={10}
                                 className="z-50 w-72 bg-white border-2 border-white/20 p-5 rounded-[2rem] shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-right-4 duration-300 text-gray-900"
@@ -534,7 +529,7 @@ export default function RingAttention() {
                                 <div className="space-y-3 text-left">
                                   <div className="flex justify-between items-center border-b border-gray-100 pb-2">
                                     <span className="text-[10px] font-black text-[#ff00e5] uppercase tracking-widest italic">
-                                      Encrypted Block {i + 1}
+                                      Data Block {i + 1}
                                     </span>
                                     <span className="text-[10px] font-black text-gray-400 font-mono">
                                       VAL_{(blockWeight * 100).toFixed(0)}
@@ -559,7 +554,7 @@ export default function RingAttention() {
 
                 <div className="flex justify-between items-center px-2">
                   <span className="text-[9px] font-black uppercase text-blue-300/40 tracking-widest italic">
-                    Core Integrity
+                    Integrity Check
                   </span>
                   <div className="flex gap-1.5">
                     {[1, 2, 3, 4, 5].map((j) => (
@@ -579,11 +574,11 @@ export default function RingAttention() {
               </div>
               <p className="text-xs text-blue-100/50 leading-relaxed font-medium italic">
                 <strong className="text-white not-italic">
-                  Universal Recall:
+                  Context Synchronization:
                 </strong>{" "}
-                The pipeline compares local search intents to orbiting memory
-                packets. With bit-perfect synchronization, distance is
-                irrelevant. Zero loss, total clarity.
+                The system compares local search intents to remote memory
+                packets. With bit-perfect synchronization, physical distribution
+                is irrelevant. Zero loss, total clarity.
               </p>
             </div>
           </div>
@@ -596,12 +591,12 @@ export default function RingAttention() {
             </h4>
             <p className="text-sm text-blue-100/40 leading-relaxed font-medium italic">
               Summarization is a shadow of the truth. Throwing data away leads
-              to a foggy past. By step 100, the story is forgotten.
+              to a foggy past. By step 100, the context is forgotten.
             </p>
           </div>
           <div className="space-y-3 text-right">
             <h4 className="text-xl font-black text-[#00f2ff] italic tracking-tight text-white">
-              Quantum Ring (Lossless)
+              Ring Topology (Lossless)
             </h4>
             <p className="text-sm text-blue-100/40 leading-relaxed font-medium italic">
               By rotating raw source material, we maintain 100% mathematical

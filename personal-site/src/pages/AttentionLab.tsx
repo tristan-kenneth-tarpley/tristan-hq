@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 
 export default function AttentionLab() {
   return (
-    <div className="min-h-screen bg-[#0a0a2e] text-white selection:bg-[#00f2ff]/30 overflow-hidden font-sans">
+    <div className="min-h-screen bg-[#0a0a2e] text-white selection:bg-[#00f2ff]/30 font-sans">
       {/* Background Glow */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
         <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-[#00f2ff]/5 blur-[150px] rounded-full" />
