@@ -61,7 +61,7 @@ export default function Home() {
             <motion.div
               animate={{ y: [0, -15, 0] }}
               transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-              className="bg-white/10 backdrop-blur-xl border-4 border-white/20 rounded-[4rem] p-12 shadow-[0_0_50px_rgba(0,242,255,0.15)] relative"
+              className="bg-white/10 backdrop-blur-xl border-4 border-white/20 rounded-[4rem] p-12 shadow-[0_0_50px_rgba(0,242,255,0.15)] relative z-10 transform-gpu"
             >
               {/* Retro Antenna */}
               <div className="absolute -top-12 left-1/2 -translate-x-1/2 flex flex-col items-center">
@@ -87,15 +87,15 @@ export default function Home() {
               <p className="text-xl text-blue-100/70 leading-relaxed max-w-lg mx-auto font-medium italic">
                 Home of tinkerings, musings, and happenings
               </p>
-            </motion.div>
 
-            {/* Jetson Stilts/Legs */}
-            <div className="absolute top-[90%] left-1/4 w-1 h-32 bg-gradient-to-b from-white/20 to-transparent -z-10" />
-            <div className="absolute top-[90%] right-1/4 w-1 h-32 bg-gradient-to-b from-white/20 to-transparent -z-10" />
+              {/* Jetson Stilts/Legs - Moved inside for better layering */}
+              <div className="absolute top-[100%] left-1/4 w-1 h-32 bg-gradient-to-b from-white/20 to-transparent -z-10" />
+              <div className="absolute top-[100%] right-1/4 w-1 h-32 bg-gradient-to-b from-white/20 to-transparent -z-10" />
+            </motion.div>
           </div>
 
           {/* BIO SECTION: Personnel File */}
-          <section className="mb-20 space-y-8 relative">
+          <section className="mb-20 space-y-8 relative z-20">
             <div className="flex items-center justify-center gap-4">
               <div className="w-2 h-2 bg-[#ff00e5] rounded-full shadow-[0_0_10px_#ff00e5]" />
               <h2 className="text-[10px] font-black uppercase tracking-[0.5em] text-[#ff00e5] italic">

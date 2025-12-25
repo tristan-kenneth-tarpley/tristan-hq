@@ -1,10 +1,4 @@
-import {
-  RotateCcw,
-  Pause,
-  Play,
-  ChevronRight,
-  Radio,
-} from "lucide-react";
+import { RotateCcw, Pause, Play, ChevronRight, Radio } from "lucide-react";
 import { METAPHORS, type Mode } from "../constants";
 import { cn } from "./ui-elements";
 import { Link, useLocation } from "react-router-dom";
@@ -54,7 +48,7 @@ export const Navbar = ({
                 </div>
               </div>
               <h1 className="hidden text-[10px] font-black uppercase tracking-tighter text-white sm:block italic">
-                Tinkerings
+                Back to base
               </h1>
             </Link>
 
