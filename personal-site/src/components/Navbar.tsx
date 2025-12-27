@@ -62,7 +62,7 @@ export const Navbar = ({
                     : "text-blue-300/40 hover:text-blue-100",
                 )}
               >
-                Standard
+                Self
               </Link>
               <Link
                 to="/ring-attention"
@@ -89,7 +89,7 @@ export const Navbar = ({
                   : "text-blue-300/60",
               )}
             >
-              Story
+              Story Mode
             </button>
             <button
               onClick={() => setMode("tech")}
@@ -100,7 +100,7 @@ export const Navbar = ({
                   : "text-blue-300/60",
               )}
             >
-              Tech
+              Tech Mode
             </button>
           </div>
         </div>
@@ -217,7 +217,7 @@ export const Navbar = ({
                 : "text-blue-300/60",
             )}
           >
-            Story
+            Story Mode
           </button>
           <button
             onClick={() => setMode("tech")}
@@ -228,7 +228,7 @@ export const Navbar = ({
                 : "text-blue-300/60",
             )}
           >
-            Tech
+            Tech Mode
           </button>
         </div>
       </div>

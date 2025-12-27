@@ -63,7 +63,7 @@ export default function AttentionLab() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
           <PageCard
-            title="Standard Attention"
+            title="Self Attention"
             desc="The foundation of modern LLMs. Understand the quadratic memory wall and why context length is limited."
             href="/self-attention"
             icon={<LayoutGrid className="text-[#00f2ff]" size={32} />}

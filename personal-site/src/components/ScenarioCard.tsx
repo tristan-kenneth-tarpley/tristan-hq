@@ -34,7 +34,7 @@ export const ScenarioCard = ({
         </div>
         <div className="text-center sm:text-left">
           <h3 className="text-[10px] font-black text-[#00f2ff] uppercase tracking-[0.3em] mb-1 italic">
-            Mission Log
+            The Scenario
           </h3>
           <p className="text-blue-100/70 leading-relaxed italic text-sm font-medium">
             {mode === "story" ? storyText : techText}

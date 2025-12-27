@@ -102,6 +102,6 @@ export const DEFINITIONS = {
     title: "Accumulated Sum (S)",
     story:
       "The total 'volume' of all clues found so far. We need this total at the end to properly weight how much attention to pay to each clue.",
-    tech: "The running denominator of the Softmax function. It allows us to calculate an identical result to standard attention without seeing all data at once.",
+    tech: "The running denominator of the Softmax function. It allows us to calculate an identical result to self-attention without seeing all data at once.",
   },
 };

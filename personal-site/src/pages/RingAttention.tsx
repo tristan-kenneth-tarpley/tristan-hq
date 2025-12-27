@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   GraduationCap,
   Cpu,
@@ -10,6 +11,9 @@ import {
   ChevronRight,
   Zap,
   Radio,
+  ArrowLeft,
+  History,
+  LayoutGrid,
 } from "lucide-react";
 import * as Popover from "@radix-ui/react-popover";
 import { Navbar } from "../components/Navbar";
@@ -151,7 +155,7 @@ export default function RingAttention() {
             <p className="text-[11px] font-medium leading-relaxed text-blue-100/50 italic">
               {isOverlapped
                 ? "Pipelined Execution: Nodes receive next data blocks while processing current ones."
-                : "Standard Link: Hardware waits for full data synchronization before starting computation."}
+                : "Serial Link: Hardware waits for full data synchronization before starting computation."}
             </p>
           </div>
 
@@ -602,6 +606,49 @@ export default function RingAttention() {
               By rotating raw source material, we maintain 100% mathematical
               truth. Every connection is preserved, forever.
             </p>
+          </div>
+        </section>
+
+        {/* LOOKING BACK SECTION: Origins */}
+        <section className="mt-32 w-full max-w-4xl mx-auto border-t border-white/10 pt-20">
+          <div className="flex flex-col md:flex-row-reverse items-center gap-12 text-center md:text-right">
+            <div className="flex-1 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#00f2ff]/10 rounded-full border border-[#00f2ff]/20 text-[10px] font-black text-[#00f2ff] uppercase tracking-widest italic">
+                <History size={10} className="animate-pulse" />
+                The Core Foundation
+              </div>
+              <h2 className="text-4xl font-black italic tracking-tighter text-white">
+                How did we get here?
+              </h2>
+              <p className="text-blue-100/60 text-lg leading-relaxed font-medium italic">
+                Ring Attention is a massive orchestration of a much simpler breakthrough. 
+                Check out the original mechanism behind 
+                <span className="text-white font-black underline decoration-[#ff00e5] decoration-2 underline-offset-4 mx-1">Self Attention</span> 
+                and the quadratic scaling limits that made the "Ring" approach necessary.
+              </p>
+              
+              <Link to="/self-attention" className="group inline-flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-[#ff00e5]/10 border-2 border-white/10 hover:border-[#ff00e5]/50 rounded-full transition-all mt-4">
+                <ArrowLeft size={18} className="text-[#ff00e5] group-hover:-translate-x-1 transition-transform" />
+                <span className="text-xs font-black uppercase tracking-widest text-[#ff00e5]">Back to Self Attention</span>
+              </Link>
+            </div>
+
+            <div className="w-48 h-48 md:w-64 md:h-48 relative shrink-0 flex items-center justify-center">
+              <div className="absolute inset-0 bg-[#ff00e5]/10 blur-3xl rounded-full animate-pulse" />
+              {/* Abstract Matrix Visual */}
+              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-3xl border-4 border-white/10 overflow-hidden grid grid-cols-4 grid-rows-4 opacity-40">
+                {Array.from({ length: 16 }).map((_, i) => (
+                  <div key={i} className="border-[0.5px] border-white/5 bg-white/5" />
+                ))}
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-[#ff00e5] to-[#00f2ff] p-[2px] shadow-[0_0_30px_rgba(255,0,229,0.3)]">
+                  <div className="w-full h-full rounded-full bg-[#0a0a2e] flex items-center justify-center">
+                    <LayoutGrid size={24} className="text-white" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </main>

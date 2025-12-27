@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Rocket, Radio, Linkedin } from "lucide-react";
+import { ArrowRight, Sparkles, Rocket, Radio, Linkedin, Github } from "lucide-react";
 
 const getYear = () => {
   const date = new Date();
@@ -136,8 +136,8 @@ export default function Home() {
                   >
                     Webflow
                   </a>{" "}
-                  focused on generative design features. I live in Houston,
-                  Texas, with my wife, Andréa, and daughter, Amélie.
+                  building generative design products. I live in Houston, Texas,
+                  with my wife, Andréa, and daughter, Amélie.
                 </p>
                 <div className="mt-4 flex items-center gap-4">
                   <a
@@ -148,6 +148,15 @@ export default function Home() {
                   >
                     <Linkedin size={14} />
                     <span>LinkedIn</span>
+                  </a>
+                  <a
+                    href="https://github.com/tristan-kenneth-tarpley"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#00f2ff] hover:text-[#ff00e5] transition-colors group/link"
+                  >
+                    <Github size={14} />
+                    <span>GitHub</span>
                   </a>
                 </div>
               </div>
@@ -212,6 +221,16 @@ export default function Home() {
           >
             <Linkedin size={10} />
             <span>LinkedIn</span>
+          </a>
+          <div className="w-1 h-1 bg-white/20 rounded-full" />
+          <a
+            href="https://github.com/tristan-kenneth-tarpley"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#00f2ff] transition-colors flex items-center gap-1.5"
+          >
+            <Github size={10} />
+            <span>GitHub</span>
           </a>
         </div>
       </main>
