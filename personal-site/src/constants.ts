@@ -1,3 +1,8 @@
+export const LINKS = {
+  LINKEDIN: "https://www.linkedin.com/in/tristantarpley/",
+  GITHUB: "https://github.com/tristan-kenneth-tarpley",
+};
+
 export type Mode = "story" | "tech";
 
 export const STORY_DATA = [
