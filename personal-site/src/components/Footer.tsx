@@ -8,7 +8,7 @@ const getYear = () => {
 
 export default function Footer() {
   return (
-    <div className="mt-24 text-blue-100/20 text-[10px] font-black uppercase tracking-[0.4em] flex flex-col md:flex-row items-center gap-4 md:gap-4 text-center">
+    <div className="mt-24 text-blue-100/20 text-[10px] font-black uppercase tracking-[0.4em] flex flex-col md:flex-row items-center justify-center gap-4 text-center w-full">
       <span>Stardate {getYear()}</span>
       <div className="w-1 h-1 bg-white/20 rounded-full hidden md:block" />
       <span>Sector: Houston</span>

@@ -7,9 +7,9 @@ import {
   Cpu,
   GraduationCap,
   Sparkles,
-  ArrowLeft,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import SiteNav from "../components/SiteNav";
 
 export default function AttentionLab() {
   return (
@@ -20,18 +20,7 @@ export default function AttentionLab() {
         <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-[#ff00e5]/5 blur-[150px] rounded-full" />
       </div>
 
-      <nav className="max-w-5xl mx-auto px-6 pt-12 relative z-10">
-        <Link
-          to="/"
-          className="group inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.4em] text-blue-300/40 hover:text-[#00f2ff] transition-all italic"
-        >
-          <ArrowLeft
-            size={12}
-            className="group-hover:-translate-x-1 transition-transform"
-          />
-          Back to Base
-        </Link>
-      </nav>
+      <SiteNav />
 
       <main className="max-w-5xl mx-auto px-6 py-12 flex flex-col items-center">
         <motion.div

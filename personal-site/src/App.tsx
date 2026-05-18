@@ -1,30 +1,32 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { useLocation, Outlet } from "react-router-dom";
+import type { RouteObject } from "react-router-dom";
 import Home from "./pages/Home";
 import AttentionLab from "./pages/AttentionLab";
 import RingAttention from "./pages/RingAttention";
 import SelfAttention from "./pages/SelfAttention";
+import Essays from "./pages/Essays";
+import EssayPost from "./pages/EssayPost";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-
-  return null;
+  return <Outlet />;
 }
 
-export default function App() {
-  return (
-    <Router>
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/attention" element={<AttentionLab />} />
-        <Route path="/ring-attention" element={<RingAttention />} />
-        <Route path="/self-attention" element={<SelfAttention />} />
-      </Routes>
-    </Router>
-  );
-}
+export const routes: RouteObject[] = [
+  {
+    path: "/",
+    element: <ScrollToTop />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "attention", element: <AttentionLab /> },
+      { path: "ring-attention", element: <RingAttention /> },
+      { path: "self-attention", element: <SelfAttention /> },
+      { path: "essays", element: <Essays /> },
+      { path: "essays/:slug", element: <EssayPost /> },
+    ],
+  },
+];
