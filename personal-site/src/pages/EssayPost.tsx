@@ -1,6 +1,7 @@
 import { useParams, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { getEssay } from '../utils/essays';
 import Footer from '../components/Footer';
 import SiteNav from '../components/SiteNav';
@@ -51,6 +52,7 @@ export default function EssayPost() {
           {/* Prose */}
           <div className="essay-prose">
             <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
               components={{
                 h1: ({ children }) => (
                   <h1 className="text-3xl font-black italic tracking-tight text-white mt-12 mb-4 first:mt-0">
@@ -122,6 +124,28 @@ export default function EssayPost() {
                 pre: ({ children }) => <>{children}</>,
                 hr: () => (
                   <div className="my-10 h-px bg-gradient-to-r from-[#ff00e5]/20 via-white/10 to-transparent" />
+                ),
+                table: ({ children }) => (
+                  <div className="overflow-x-auto my-8">
+                    <table className="w-full text-sm border-collapse">{children}</table>
+                  </div>
+                ),
+                thead: ({ children }) => (
+                  <thead className="border-b border-[#ff00e5]/30">{children}</thead>
+                ),
+                tbody: ({ children }) => (
+                  <tbody className="divide-y divide-white/5">{children}</tbody>
+                ),
+                tr: ({ children }) => <tr className="group">{children}</tr>,
+                th: ({ children }) => (
+                  <th className="text-left px-4 py-3 text-[10px] font-black uppercase tracking-widest text-[#ff00e5]/70">
+                    {children}
+                  </th>
+                ),
+                td: ({ children }) => (
+                  <td className="px-4 py-3 text-blue-100/70 font-medium leading-relaxed group-hover:text-blue-100/90 transition-colors">
+                    {children}
+                  </td>
                 ),
               }}
             >
