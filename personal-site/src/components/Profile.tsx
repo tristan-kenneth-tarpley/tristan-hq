@@ -36,7 +36,7 @@ export default function Profile() {
             Tristan Tarpley
           </h3>
           <p className="text-sm text-blue-100/70 leading-relaxed font-medium italic">
-            I'm a Staff Engineer at{" "}
+            I'm a Staff Engineer + TLM at{" "}
             <a
               href="https://www.webflow.com/"
               target="_blank"
