@@ -46,10 +46,15 @@ function buildHtml(template, appHtml, { title, description }) {
     `<meta name="twitter:description" content="${desc}" />`,
   ].join("\n    ");
 
-  return template
+  const withMeta = template
     .replace(/<title>[^<]*<\/title>/, "")
-    .replace("</head>", `    ${metaTags}\n  </head>`)
-    .replace(`<div id="root"></div>`, `<div id="root">${appHtml}</div>`);
+    .replace("</head>", `    ${metaTags}\n  </head>`);
+
+  // Only inject body HTML when content was rendered (avoids React Router
+  // hydration errors on routes where we only need meta tags)
+  return appHtml
+    ? withMeta.replace(`<div id="root"></div>`, `<div id="root">${appHtml}</div>`)
+    : withMeta;
 }
 
 function writeRoute(html, routePath) {
@@ -107,15 +112,25 @@ const { render } = await import(path.join(ssrTempDir, ssrEntry));
 
 const template = fs.readFileSync(path.join(distDir, "index.html"), "utf-8");
 
-const routes = [
+// Meta-only routes: correct <head> tags but keep #root empty so React
+// Router initialises without expecting server hydration context.
+const metaOnlyRoutes = [
   { path: "/", title: null, description: "Home of tinkerings, musings, and happenings." },
+];
+
+// Full SSR routes: meta tags + pre-rendered body content.
+const ssrRoutes = [
   { path: "/essays", title: "Stuff I Wrote", description: "Essays and musings by Tristan Tarpley." },
   ...essays.map((e) => ({ path: `/essays/${e.slug}`, title: e.title, description: e.description })),
 ];
 
-console.log(`[prerender] Rendering ${routes.length} routes...\n`);
+console.log(`[prerender] Rendering ${metaOnlyRoutes.length + ssrRoutes.length} routes...\n`);
 
-for (const route of routes) {
+for (const route of metaOnlyRoutes) {
+  writeRoute(buildHtml(template, null, route), route.path);
+}
+
+for (const route of ssrRoutes) {
   const appHtml = await render(route.path);
   writeRoute(buildHtml(template, appHtml, route), route.path);
 }
