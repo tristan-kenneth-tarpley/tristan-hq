@@ -10,8 +10,11 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import SiteNav from "../components/SiteNav";
+import { usePostHog } from "@posthog/react";
 
 export default function AttentionLab() {
+  const posthog = usePostHog();
+
   return (
     <div className="min-h-screen bg-[#0a0a2e] text-white selection:bg-[#00f2ff]/30 font-sans">
       {/* Background Glow */}
@@ -57,6 +60,7 @@ export default function AttentionLab() {
             href="/self-attention"
             icon={<LayoutGrid className="text-[#00f2ff]" size={32} />}
             mode="The Breakthrough"
+            onClick={() => posthog?.capture("attention_experiment_selected", { experiment: "self_attention" })}
           />
           <PageCard
             title="Ring Attention"
@@ -64,6 +68,7 @@ export default function AttentionLab() {
             href="/ring-attention"
             icon={<CircleDot className="text-[#ff00e5]" size={32} />}
             mode="The Scaling Mechanism"
+            onClick={() => posthog?.capture("attention_experiment_selected", { experiment: "ring_attention" })}
           />
         </div>
 
@@ -95,15 +100,17 @@ function PageCard({
   href,
   icon,
   mode,
+  onClick,
 }: {
   title: string;
   desc: string;
   href: string;
   icon: React.ReactNode;
   mode: string;
+  onClick?: () => void;
 }) {
   return (
-    <Link to={href} className="group">
+    <Link to={href} className="group" onClick={onClick}>
       <motion.div
         whileHover={{ y: -8, scale: 1.02 }}
         className="bg-white/5 backdrop-blur-xl p-8 rounded-[3rem] border-2 border-white/5 group-hover:border-[#00f2ff]/30 transition-all h-full flex flex-col shadow-2xl relative overflow-hidden"

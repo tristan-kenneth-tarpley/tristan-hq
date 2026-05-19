@@ -7,6 +7,7 @@ import RingAttention from "./pages/RingAttention";
 import SelfAttention from "./pages/SelfAttention";
 import Essays from "./pages/Essays";
 import EssayPost from "./pages/EssayPost";
+import RootErrorBoundary from "./RootErrorBoundary";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -20,6 +21,7 @@ export const routes: RouteObject[] = [
   {
     path: "/",
     element: <ScrollToTop />,
+    ErrorBoundary: RootErrorBoundary,
     children: [
       { index: true, element: <Home /> },
       { path: "attention", element: <AttentionLab /> },

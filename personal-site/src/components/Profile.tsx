@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
 import { Linkedin, Github } from "lucide-react";
 import { LINKS } from "../constants";
+import { usePostHog } from "@posthog/react";
 
 export default function Profile() {
+  const posthog = usePostHog();
+
   return (
     <section className="mb-20 space-y-8 relative z-20">
       <div className="flex items-center justify-center gap-4">
@@ -54,6 +57,7 @@ export default function Profile() {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#00f2ff] hover:text-[#ff00e5] transition-colors group/link"
+              onClick={() => posthog?.capture("social_link_clicked", { platform: "linkedin" })}
             >
               <Linkedin size={14} />
               <span>LinkedIn</span>
@@ -63,6 +67,7 @@ export default function Profile() {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#00f2ff] hover:text-[#ff00e5] transition-colors group/link"
+              onClick={() => posthog?.capture("social_link_clicked", { platform: "github" })}
             >
               <Github size={14} />
               <span>GitHub</span>

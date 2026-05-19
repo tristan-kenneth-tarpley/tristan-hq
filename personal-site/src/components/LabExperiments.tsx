@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Rocket, BookOpen } from "lucide-react";
+import { usePostHog } from "@posthog/react";
 
 export default function LabExperiments() {
+  const posthog = usePostHog();
+
   return (
     <section className="space-y-8 relative">
       <div className="flex items-center justify-center gap-4">
@@ -14,7 +17,7 @@ export default function LabExperiments() {
       </div>
 
       <div className="grid grid-cols-1 gap-6 w-full max-w-md mx-auto">
-        <Link to="/attention" className="group relative">
+        <Link to="/attention" className="group relative" onClick={() => posthog?.capture("lab_experiment_clicked", { experiment: "attention_lab" })}>
           <div className="absolute inset-0 bg-[#00f2ff]/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
           <motion.div
             whileHover={{ y: -8, scale: 1.05 }}
@@ -43,7 +46,7 @@ export default function LabExperiments() {
           </motion.div>
         </Link>
 
-        <Link to="/essays" className="group relative">
+        <Link to="/essays" className="group relative" onClick={() => posthog?.capture("lab_experiment_clicked", { experiment: "essays" })}>
           <div className="absolute inset-0 bg-[#ff00e5]/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
           <motion.div
             whileHover={{ y: -8, scale: 1.05 }}

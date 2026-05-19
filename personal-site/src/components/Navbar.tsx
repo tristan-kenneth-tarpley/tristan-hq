@@ -2,6 +2,7 @@ import { RotateCcw, Pause, Play, ChevronRight, Radio } from "lucide-react";
 import { METAPHORS, type Mode } from "../constants";
 import { cn } from "./ui-elements";
 import { Link, useLocation } from "react-router-dom";
+import { usePostHog } from "@posthog/react";
 
 interface NavbarProps {
   mode: Mode;
@@ -34,6 +35,7 @@ export const Navbar = ({
 }: NavbarProps) => {
   const m = METAPHORS[mode];
   const location = useLocation();
+  const posthog = usePostHog();
 
   return (
     <nav className="sticky top-0 z-50 border-b border-white/10 bg-[#0a0a2e]/80 py-3 backdrop-blur-xl md:h-16 md:py-0">
@@ -81,7 +83,7 @@ export const Navbar = ({
           {/* Mode Switcher (Mobile Only) */}
           <div className="flex items-center gap-1 rounded-full border border-white/10 bg-white/5 p-0.5 md:hidden">
             <button
-              onClick={() => setMode("story")}
+              onClick={() => { setMode("story"); posthog?.capture("visualizer_mode_changed", { mode: "story" }); }}
               className={cn(
                 "flex items-center gap-1.5 rounded-full px-3 py-1 text-[9px] font-black uppercase transition-all italic",
                 mode === "story"
@@ -92,7 +94,7 @@ export const Navbar = ({
               Story Mode
             </button>
             <button
-              onClick={() => setMode("tech")}
+              onClick={() => { setMode("tech"); posthog?.capture("visualizer_mode_changed", { mode: "tech" }); }}
               className={cn(
                 "flex items-center gap-1.5 rounded-full px-3 py-1 text-[9px] font-black uppercase transition-all italic",
                 mode === "tech"
@@ -126,6 +128,8 @@ export const Navbar = ({
                 setSequenceLength(parseInt(e.target.value));
                 reset();
               }}
+              onMouseUp={(e) => posthog?.capture("sequence_length_changed", { sequence_length: parseInt((e.target as HTMLInputElement).value) })}
+              onTouchEnd={(e) => posthog?.capture("sequence_length_changed", { sequence_length: parseInt((e.target as HTMLInputElement).value) })}
               className="h-1 w-full cursor-pointer appearance-none rounded-full bg-white/10 accent-[#00f2ff]"
             />
           </div>
@@ -168,7 +172,12 @@ export const Navbar = ({
                 <RotateCcw size={14} />
               </button>
               <button
-                onClick={() => setIsPlaying(!isPlaying)}
+                onClick={() => {
+                  if (!isPlaying) {
+                    posthog?.capture("visualizer_started", { visualizer: location.pathname.replace("/", "") });
+                  }
+                  setIsPlaying(!isPlaying);
+                }}
                 className={cn(
                   "mx-0.5 flex h-7 w-8 items-center justify-center rounded-full font-black shadow-lg transition-all active:scale-95",
                   isPlaying
@@ -209,7 +218,7 @@ export const Navbar = ({
         {/* Mode Switcher (Desktop Only) */}
         <div className="hidden shrink-0 items-center gap-1 rounded-full border border-white/10 bg-white/5 p-0.5 md:flex">
           <button
-            onClick={() => setMode("story")}
+            onClick={() => { setMode("story"); posthog?.capture("visualizer_mode_changed", { mode: "story" }); }}
             className={cn(
               "flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-black uppercase transition-all italic",
               mode === "story"
@@ -220,7 +229,7 @@ export const Navbar = ({
             Story Mode
           </button>
           <button
-            onClick={() => setMode("tech")}
+            onClick={() => { setMode("tech"); posthog?.capture("visualizer_mode_changed", { mode: "tech" }); }}
             className={cn(
               "flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-black uppercase transition-all italic",
               mode === "tech"

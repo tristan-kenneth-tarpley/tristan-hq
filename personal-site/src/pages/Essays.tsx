@@ -4,9 +4,11 @@ import { ArrowRight, BookOpen } from 'lucide-react';
 import { getEssays } from '../utils/essays';
 import Footer from '../components/Footer';
 import SiteNav from '../components/SiteNav';
+import { usePostHog } from '@posthog/react';
 
 export default function Essays() {
   const essays = getEssays();
+  const posthog = usePostHog();
 
   return (
     <div className="min-h-screen bg-[#0a0a2e] text-[#f0f9ff] selection:bg-[#ff00e5]/30 font-sans">
@@ -39,7 +41,7 @@ export default function Essays() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
               >
-                <Link to={`/essays/${essay.slug}`} className="group relative block">
+                <Link to={`/essays/${essay.slug}`} className="group relative block" onClick={() => posthog?.capture("essay_clicked", { slug: essay.slug, title: essay.title })}>
                   <div className="absolute inset-0 bg-[#ff00e5]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity rounded-full" />
                   <div className="relative bg-[#16164d]/80 backdrop-blur-md p-6 rounded-2xl border border-white/10 group-hover:border-[#ff00e5]/40 transition-all flex items-center justify-between gap-4">
                     <div className="flex items-start gap-4 min-w-0">

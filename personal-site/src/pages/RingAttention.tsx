@@ -21,6 +21,7 @@ import { Scorecard } from "../components/Scorecard";
 import { ScenarioCard } from "../components/ScenarioCard";
 import { cn } from "../components/ui-elements";
 import { STORY_DATA, TECH_DATA, METAPHORS, type Mode } from "../constants";
+import { usePostHog } from "@posthog/react";
 
 export default function RingAttention() {
   const [mode, setMode] = useState<Mode>("story");
@@ -36,6 +37,7 @@ export default function RingAttention() {
   const [, setIsComputing] = useState(true);
   const [isTransferring, setIsTransferring] = useState(false);
 
+  const posthog = usePostHog();
   const m = METAPHORS[mode];
   const dataSet = mode === "story" ? STORY_DATA : TECH_DATA;
 
@@ -141,7 +143,7 @@ export default function RingAttention() {
                 </h3>
               </div>
               <button
-                onClick={() => setIsOverlapped(!isOverlapped)}
+                onClick={() => { posthog?.capture("network_overlap_toggled", { overlap_enabled: !isOverlapped }); setIsOverlapped(!isOverlapped); }}
                 className={cn(
                   "border px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all italic",
                   isOverlapped
