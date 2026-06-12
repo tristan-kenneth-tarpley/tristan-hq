@@ -1,0 +1,90 @@
+---
+import Linkedin from "./icons/Linkedin.astro";
+import Github from "./icons/Github.astro";
+import { LINKS } from "../constants";
+---
+
+<section class="mb-20 space-y-8 relative z-20">
+  <div class="flex items-center justify-center gap-4">
+    <div class="w-2 h-2 bg-[#ff00e5] rounded-full shadow-[0_0_10px_#ff00e5]"></div>
+    <h2
+      class="text-[10px] font-black uppercase tracking-[0.5em] text-[#ff00e5] italic"
+    >
+      Profile
+    </h2>
+    <div class="w-2 h-2 bg-[#ff00e5] rounded-full shadow-[0_0_10px_#ff00e5]"></div>
+  </div>
+
+  <div
+    class="bg-white/5 backdrop-blur-md p-8 rounded-[3rem] border-2 border-white/10 flex flex-col md:flex-row items-center gap-8 max-w-xl mx-auto shadow-2xl relative overflow-hidden group transition-transform duration-300 hover:scale-[1.02]"
+  >
+    <div
+      class="absolute inset-0 bg-gradient-to-br from-[#00f2ff]/5 to-transparent pointer-events-none"
+    >
+    </div>
+
+    {/* Profile image frame */}
+    <div
+      class="w-28 h-28 rounded-full border-4 border-[#00f2ff] shadow-[0_0_20px_rgba(0,242,255,0.3)] overflow-hidden shrink-0 bg-[#0a0a2e] relative"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-tr from-[#ff00e5]/20 to-transparent opacity-50 z-10"
+      >
+      </div>
+      <div
+        class="w-full h-full flex items-center justify-center text-[#00f2ff]/20"
+      >
+        <img
+          src="/headshot.JPG"
+          alt="Profile Picture"
+          class="w-full h-full object-cover"
+        />
+      </div>
+    </div>
+
+    <div class="text-left flex-1 relative z-10">
+      <h3
+        class="text-lg font-black text-white italic mb-2 tracking-tight uppercase"
+      >
+        Tristan Tarpley
+      </h3>
+      <p class="text-sm text-blue-100/70 leading-relaxed font-medium italic">
+        I'm a Staff Engineer + TLM at{" "}
+        <a
+          href="https://www.webflow.com/"
+          target="_blank"
+          rel="noopener"
+          class="text-white font-black underline decoration-[#00f2ff] decoration-2 underline-offset-4"
+        >
+          Webflow
+        </a>
+        {" "}building generative design products. I live in Houston, Texas, with my
+        wife, Andréa, and daughter, Amélie.
+      </p>
+      <div class="mt-4 flex items-center gap-4">
+        <a
+          href={LINKS.LINKEDIN}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-ph-event="social_link_clicked"
+          data-ph-platform="linkedin"
+          class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#00f2ff] hover:text-[#ff00e5] transition-colors"
+        >
+          <Linkedin size={14} />
+          <span>LinkedIn</span>
+        </a>
+        <a
+          href={LINKS.GITHUB}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-ph-event="social_link_clicked"
+          data-ph-platform="github"
+          class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#00f2ff] hover:text-[#ff00e5] transition-colors"
+        >
+          <Github size={14} />
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

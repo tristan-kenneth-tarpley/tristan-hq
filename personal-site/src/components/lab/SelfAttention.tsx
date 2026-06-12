@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { Link } from "react-router-dom";
+
 import { motion } from "framer-motion";
 import {
   GraduationCap,
@@ -16,11 +16,11 @@ import {
   ArrowRight,
 } from "lucide-react";
 import * as Popover from "@radix-ui/react-popover";
-import { Navbar } from "../components/Navbar";
-import { ScenarioCard } from "../components/ScenarioCard";
-import { MemoryMeter, cn } from "../components/ui-elements";
-import { STORY_DATA, TECH_DATA, METAPHORS, type Mode } from "../constants";
-import { SELF_ATTENTION_SCENARIO } from "../educational-data";
+import { Navbar } from "../Navbar";
+import { ScenarioCard } from "../ScenarioCard";
+import { MemoryMeter, cn } from "../ui-elements";
+import { STORY_DATA, TECH_DATA, METAPHORS, type Mode } from "../../constants";
+import { SELF_ATTENTION_SCENARIO } from "../../educational-data";
 
 export default function SelfAttention() {
   const [mode, setMode] = useState<Mode>("story");
@@ -41,7 +41,7 @@ export default function SelfAttention() {
   );
 
   useEffect(() => {
-    let interval: number;
+    let interval: ReturnType<typeof setInterval> | undefined;
     if (isPlaying && !isOOM) {
       interval = setInterval(() => {
         setStep((s) => (s + 1) % 64);
@@ -74,6 +74,7 @@ export default function SelfAttention() {
         setIsPlaying={setIsPlaying}
         reset={reset}
         maxSteps={64}
+        pathname="/self-attention"
       />
 
       <main className="mx-auto max-w-7xl px-6 py-12 pb-20">
@@ -812,8 +813,8 @@ export default function SelfAttention() {
                 for near-infinite context.
               </p>
 
-              <Link
-                to="/ring-attention"
+              <a
+                href="/ring-attention"
                 className="group inline-flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-[#00f2ff]/10 border-2 border-white/10 hover:border-[#00f2ff]/50 rounded-full transition-all mt-4"
               >
                 <span className="text-xs font-black uppercase tracking-widest text-[#00f2ff]">
@@ -823,7 +824,7 @@ export default function SelfAttention() {
                   size={18}
                   className="text-[#00f2ff] group-hover:translate-x-1 transition-transform"
                 />
-              </Link>
+              </a>
             </div>
 
             <div className="w-48 h-48 md:w-64 md:h-48 relative shrink-0 flex items-center justify-center">

@@ -13,3 +13,114 @@ body {
   background-color: #0a0a2e;
   color: #f0f9ff;
 }
+
+/* ---------- Page-level CSS animations (replacing framer-motion on static pages) ---------- */
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+.animate-float-y { animation: float-y 4s ease-in-out infinite; }
+.animate-fade-in-up { animation: fade-in-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-fade-in { animation: fade-in 1.5s ease-out both; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+/* ---------- Essay prose (rendered from markdown via <Content />) ---------- */
+
+.essay-prose h1 {
+  @apply text-3xl font-black italic tracking-tight text-white mt-12 mb-4;
+}
+.essay-prose h1:first-child { @apply mt-0; }
+.essay-prose h2 {
+  @apply text-2xl font-black italic tracking-tight text-white mt-10 mb-3;
+}
+.essay-prose h3 {
+  @apply text-xl font-black italic text-white mt-8 mb-2;
+}
+.essay-prose p {
+  @apply text-[1.05rem] leading-[1.85] mb-5 font-medium;
+  color: rgb(219 234 254 / 0.75);
+}
+.essay-prose a {
+  @apply text-[#ff00e5] underline underline-offset-2 transition-colors;
+}
+.essay-prose a:hover {
+  color: rgb(255 0 229 / 0.8);
+}
+.essay-prose strong {
+  @apply text-white font-black;
+}
+.essay-prose em {
+  @apply italic;
+  color: rgb(219 234 254 / 0.9);
+}
+.essay-prose ul {
+  @apply mb-5 space-y-2 pl-6 list-none;
+}
+.essay-prose ol {
+  @apply mb-5 space-y-2 pl-6 list-decimal;
+}
+.essay-prose li {
+  @apply text-[1.05rem] leading-[1.85] font-medium relative;
+  color: rgb(219 234 254 / 0.75);
+}
+.essay-prose ul > li::before {
+  content: "—";
+  position: absolute;
+  left: -1.25rem;
+  color: rgb(255 0 229 / 0.5);
+}
+.essay-prose blockquote {
+  @apply border-l-2 pl-5 my-6 italic;
+  border-color: rgb(255 0 229 / 0.4);
+  color: rgb(219 234 254 / 0.6);
+}
+.essay-prose :not(pre) > code {
+  @apply bg-[#16164d] border border-white/10 rounded px-1.5 py-0.5 text-[#00f2ff] text-sm font-mono;
+}
+.essay-prose pre {
+  @apply bg-[#16164d] border border-white/10 rounded-xl p-4 text-[#00f2ff] text-sm font-mono leading-relaxed overflow-x-auto mb-5;
+}
+.essay-prose pre code {
+  @apply bg-transparent border-0 p-0;
+}
+.essay-prose hr {
+  @apply my-10 border-0 h-px;
+  background: linear-gradient(to right, rgb(255 0 229 / 0.2), rgb(255 255 255 / 0.1), transparent);
+}
+.essay-prose table {
+  @apply w-full text-sm border-collapse my-8;
+}
+.essay-prose thead {
+  border-bottom: 1px solid rgb(255 0 229 / 0.3);
+}
+.essay-prose tbody tr {
+  border-top: 1px solid rgb(255 255 255 / 0.05);
+}
+.essay-prose th {
+  @apply text-left px-4 py-3 text-[10px] font-black uppercase tracking-widest;
+  color: rgb(255 0 229 / 0.7);
+}
+.essay-prose td {
+  @apply px-4 py-3 font-medium leading-relaxed transition-colors;
+  color: rgb(219 234 254 / 0.7);
+}
+.essay-prose tr:hover td {
+  color: rgb(219 234 254 / 0.9);
+}

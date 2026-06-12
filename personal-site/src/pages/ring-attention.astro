@@ -1,0 +1,11 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import RingAttention from "../components/lab/RingAttention.tsx";
+---
+
+<BaseLayout
+  title="Ring Attention"
+  description="An interactive visualizer for Ring Attention — the distributed mechanism that scales context length without information loss."
+>
+  <RingAttention client:load />
+</BaseLayout>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+
 import {
   GraduationCap,
   Cpu,
@@ -16,12 +16,11 @@ import {
   LayoutGrid,
 } from "lucide-react";
 import * as Popover from "@radix-ui/react-popover";
-import { Navbar } from "../components/Navbar";
-import { Scorecard } from "../components/Scorecard";
-import { ScenarioCard } from "../components/ScenarioCard";
-import { cn } from "../components/ui-elements";
-import { STORY_DATA, TECH_DATA, METAPHORS, type Mode } from "../constants";
-import { usePostHog } from "@posthog/react";
+import { Navbar } from "../Navbar";
+import { Scorecard } from "../Scorecard";
+import { ScenarioCard } from "../ScenarioCard";
+import { cn } from "../ui-elements";
+import { STORY_DATA, TECH_DATA, METAPHORS, type Mode } from "../../constants";
 
 export default function RingAttention() {
   const [mode, setMode] = useState<Mode>("story");
@@ -37,7 +36,7 @@ export default function RingAttention() {
   const [, setIsComputing] = useState(true);
   const [isTransferring, setIsTransferring] = useState(false);
 
-  const posthog = usePostHog();
+
   const m = METAPHORS[mode];
   const dataSet = mode === "story" ? STORY_DATA : TECH_DATA;
 
@@ -73,7 +72,7 @@ export default function RingAttention() {
   }, [step, selectedNode, currentScores, numDevices, dataSet]);
 
   useEffect(() => {
-    let interval: number;
+    let interval: ReturnType<typeof setInterval> | undefined;
     if (isPlaying) {
       interval = setInterval(
         () => {
@@ -127,6 +126,7 @@ export default function RingAttention() {
         setIsPlaying={setIsPlaying}
         reset={reset}
         maxSteps={numDevices}
+        pathname="/ring-attention"
       />
 
       <main className="mx-auto max-w-7xl px-6 py-12 pb-20">
@@ -143,7 +143,8 @@ export default function RingAttention() {
                 </h3>
               </div>
               <button
-                onClick={() => { posthog?.capture("network_overlap_toggled", { overlap_enabled: !isOverlapped }); setIsOverlapped(!isOverlapped); }}
+                data-ph-event="network_overlap_toggled"
+                onClick={() => setIsOverlapped(!isOverlapped)}
                 className={cn(
                   "border px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all italic",
                   isOverlapped
@@ -629,10 +630,10 @@ export default function RingAttention() {
                 and the quadratic scaling limits that made the "Ring" approach necessary.
               </p>
               
-              <Link to="/self-attention" className="group inline-flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-[#ff00e5]/10 border-2 border-white/10 hover:border-[#ff00e5]/50 rounded-full transition-all mt-4">
+              <a href="/self-attention" className="group inline-flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-[#ff00e5]/10 border-2 border-white/10 hover:border-[#ff00e5]/50 rounded-full transition-all mt-4">
                 <ArrowLeft size={18} className="text-[#ff00e5] group-hover:-translate-x-1 transition-transform" />
                 <span className="text-xs font-black uppercase tracking-widest text-[#ff00e5]">Back to Self Attention</span>
-              </Link>
+              </a>
             </div>
 
             <div className="w-48 h-48 md:w-64 md:h-48 relative shrink-0 flex items-center justify-center">

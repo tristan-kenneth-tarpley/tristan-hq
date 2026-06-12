@@ -1,0 +1,11 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SelfAttention from "../components/lab/SelfAttention.tsx";
+---
+
+<BaseLayout
+  title="Self Attention"
+  description="An interactive visualizer for Self-Attention — the foundation of modern LLMs and the source of the quadratic memory wall."
+>
+  <SelfAttention client:load />
+</BaseLayout>

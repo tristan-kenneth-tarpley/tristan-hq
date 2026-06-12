@@ -1,0 +1,82 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Footer from "../../components/Footer.astro";
+import SiteNav from "../../components/SiteNav.astro";
+
+export async function getStaticPaths() {
+  const essays = await getCollection("essays");
+  return essays.map((essay) => ({
+    params: { slug: essay.id },
+    props: { essay },
+  }));
+}
+
+const { essay } = Astro.props;
+const { Content } = await render(essay);
+
+const dateFmt = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout
+  title={essay.data.title}
+  description={essay.data.description}
+  ogType="article"
+>
+  <div
+    class="min-h-screen text-[#f0f9ff] selection:bg-[#ff00e5]/30 font-sans"
+  >
+    <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+      <div
+        class="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] bg-[#ff00e5]/5 blur-[150px] rounded-full"
+      >
+      </div>
+      <div
+        class="absolute bottom-[-20%] left-[-10%] w-[60%] h-[60%] bg-[#00f2ff]/5 blur-[150px] rounded-full"
+      >
+      </div>
+    </div>
+
+    <SiteNav
+      maxWidth="max-w-3xl"
+      back={{ label: "All Essays", href: "/essays" }}
+    />
+
+    <main class="max-w-3xl mx-auto px-6 py-16">
+      <article class="animate-fade-in-up">
+        <header class="mb-12">
+          <h1
+            class="text-4xl sm:text-5xl font-black italic tracking-tight text-white leading-tight mb-4"
+          >
+            {essay.data.title}
+          </h1>
+          {
+            essay.data.description && (
+              <p class="text-blue-100/60 text-lg font-medium leading-relaxed mb-4">
+                {essay.data.description}
+              </p>
+            )
+          }
+          <p
+            class="text-[#ff00e5]/60 text-[10px] uppercase tracking-[0.4em] font-black"
+          >
+            {dateFmt.format(essay.data.date)}
+          </p>
+          <div
+            class="mt-8 h-px bg-gradient-to-r from-[#ff00e5]/30 via-white/10 to-transparent"
+          >
+          </div>
+        </header>
+
+        <div class="essay-prose">
+          <Content />
+        </div>
+      </article>
+    </main>
+    <Footer />
+  </div>
+</BaseLayout>
